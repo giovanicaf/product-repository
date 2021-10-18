@@ -1,10 +1,6 @@
 package com.github.giovanicaf.productrepository.entities;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
@@ -19,13 +15,18 @@ import java.util.Objects;
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode
+@Entity
+@Table(name = "tb_category")
 public class Category implements Serializable {
     private static final long serialVersionUID = 1L;
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
 
-    @JsonIgnore //
+    @JsonIgnore // Ignore the field in json avoiding self-reference
+    @OneToMany(mappedBy = "category")
     private final List<Product> products = new ArrayList<>(); // final to excluded in constructor lombok
 
     @Override

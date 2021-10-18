@@ -32,7 +32,7 @@ public class CategoryResource {
     @GetMapping(value = "/{id}")
     public ResponseEntity<Category> findById(@PathVariable Long id) {
 
-        Category cat = category.findById(id) ;
+        Category cat = category.findById(id).get() ;
         return ResponseEntity.ok( ).body( cat  );
     }
 }
